@@ -7,4 +7,5 @@ ZINC is a programming language written in C++ and C and aims to provide the same
 ZINC is for Linux/UNIX systems, but a windows port is planned. ZINC uses the ncurses library, and makes it a lot easier to use. 
 
 C or C++ libraries are compatable with ZINC, however can only be programmed using their native syntax.
+
 --------------------------------------------------------
