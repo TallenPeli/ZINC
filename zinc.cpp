@@ -4,13 +4,31 @@
 #include <unistd.h>
 #include <vector>
 #include <cstdlib>
-// comment
+#include <functional>
+
 using namespace std;
 
+bool keepTranslation = false;
+
+string addLibraries(){
+    string code;
+    code.append("\n//Standard Zinc functions from zincstd");
+    code.append("\nvoid print(string input){cout << input;}\n");
+    code.append("void println(string input){cout << input << endl;}\n");
+    code.append("string input(string prompt){string Input;cout << prompt;cin >> Input;return Input;}\n");
+    code.append("string getLine(string prompt){string Input;cout << prompt;getline(cin, Input);return(Input);}\n");
+    code.append("void loop(int loopAmt, const function<void()>& func){for(int i=0;i<loopAmt;i++){func();}}");
+
+    return code;
+}
+
 int main(int argc, char **argv) {
-    if (argc != 2) {
-        cerr << "Usage: " << argv[0] << " <filename>" << endl;
-        return 1;
+
+    if (argc >= 3) {
+        string arg2 = argv[2];
+        if (arg2 == "-k" || arg2 == "--keep-translation") {
+            keepTranslation = true;
+        }
     }
 
     char cwd[1024];
@@ -34,41 +52,25 @@ int main(int argc, char **argv) {
     // Create a vector to store the translated C++ code
     std::vector<std::string> translatedCode;
 
-    translatedCode.push_back("#include <iostream>\nusing namespace std;");
+    translatedCode.push_back("#include <iostream>\n#include <functional>\nusing namespace std;");
 
     // Read and process each line of the input script
     std::string line;
     while (std::getline(zincFile, line)) {
         // Translate 'using zinc;' to a comment in C++
         if (line.find("using zincstd;") != std::string::npos) {
-            translatedCode.push_back("// Translated: using zinc;");
             line.erase();
-            
+            line.append(addLibraries());
         }
 
         // Translate 'fn ' to 'int ' for function declarations
         size_t fnPos = line.find("fn ");
-        if (fnPos != std::string::npos) {
-            line.replace(fnPos, 3, "int ");
-        }
-
-        // Translate 'println(' to 'std::cout << ' with newline
-        size_t printlnPos = line.find("println(");
-        if (printlnPos != std::string::npos) {
-            line.replace(printlnPos, 8, "cout << ");
-            line.replace((line.length() - 2), line.length(), " << endl;");
-        }
-
-        // Translate 'print(' to 'std::cout << '
-        size_t printPos = line.find("print(");
-        if (printPos != std::string::npos) {
-            line.replace(printPos, 6, "cout << ");
-            line.replace((line.length() - 2), (line.length() - 2), "");
-            line.insert(line.length(), ";");
+        if (fnPos == 0 || (fnPos != std::string::npos && line[fnPos - 1] == ' ')) {
+            line.replace(fnPos, 3, "void ");
         }
 
         size_t mainPos = line.find("main()");
-        if (mainPos != std::string::npos) {
+        if (mainPos == 0 || (mainPos != std::string::npos && line[mainPos - 1] == ' ')) {
             line.replace(mainPos, 0, "int ");
         }
 
@@ -99,7 +101,14 @@ int main(int argc, char **argv) {
     if (compileResult == 0) {
         // Compilation was successful
         std::cout << "Compilation successful. Running the program..." << std::endl;
-        system("./program"); // Run the compiled program
+        system("./zinc_output"); // Run the compiled program
+
+        if(keepTranslation == true){
+            cout << "\nKept c++ translation.\n";
+        }else{
+            system("rm ./zinc_to.cpp");
+        }
+
     } else {
         // Compilation failed
         std::cerr << "Compilation failed. Please check the code for errors." << std::endl;
