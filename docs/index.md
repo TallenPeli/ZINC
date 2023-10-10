@@ -71,7 +71,7 @@ This code defines a `greet` function that takes a `name` parameter and prints a 
 
 ## Loops
 
-You can use loops to repeat code multiple times. Here's an example of a loop in Zinc:
+Loops allow you to repeat a block of code multiple times. In Zinc, you can use the `loop` function to create loops. Here's an example:
 
 ```rust
 main() {
@@ -81,25 +81,28 @@ main() {
 }
 ```
 
-In this code, we use the `loop` function to print "Hello, Zinc!" five times. The "i" is the integer that is being used to loop. This allows for nested loops to use the value of the previous loop for more complex functions.
+In this code, we are using the `loop` function to print "Hello, Zinc!" five times. The `i` inside the loop represents an integer that increments with each iteration. It lets you control how many times the loop runs and access the current iteration's value. This is especially useful for nested loops when you want to use the value of the outer loop in the inner loop.
+
+Here's another example that demonstrates nested loops and a custom function:
 
 ```rust
 using zincstd;
 
-fn hello(){
+fn hello() {
     println("hello");
 }
 
-main(){
-    loop(100,i){
-        loop(i, j){
+main() {
+    loop(100, i) {
+        loop(i, j) {
             print(" ");
         }
         hello();
     }
 }
 ```
-This code defines a "hello()" function which prints the line "hello". In the main() function, there is a loop that runs 100 times with the integer value "i". The code then defines a loop that runs the amount of times as the value "i", then it defines it's own variable "j". The code gives this output:
+
+In this code, we define a custom function called `hello()` that prints the line "hello". In the `main()` function, there's a loop that runs 100 times with the integer variable `i`. Inside that loop, we have another loop that runs the number of times specified by `i`, and it introduces its own variable `j`. This structure creates a pattern of spaces followed by "hello" that repeats. The output looks like:
 
 ```shell
 hello
@@ -121,6 +124,7 @@ hello
                 hello...
 ```
 
+This code showcases how loops and nested loops can be used to create more complex patterns and behaviors in Zinc.
 
 ## Input
 
