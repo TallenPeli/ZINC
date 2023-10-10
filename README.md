@@ -9,3 +9,16 @@ ZINC is for Linux/UNIX systems, but a windows port is planned. ZINC uses the ncu
 C or C++ libraries are compatable with ZINC, however can only be programmed using their native syntax.
 
 --------------------------------------------------------
+
+Example Code
+```c++
+using zincstd;
+
+main(){
+    string name = input("Enter name : ");
+    loop(100){
+        print("HI ");
+        println(name);
+    }
+}
+```
