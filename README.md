@@ -100,7 +100,7 @@ using zincstd;
 
 main(){
     string name = input("Enter name : ");
-    loop(100){
+    loop(100, i){
         print("HI ");
         println(name);
     }
