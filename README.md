@@ -9,6 +9,28 @@ ZINC is for Linux/UNIX systems, but a windows port is planned. ZINC uses the ncu
 C or C++ libraries are compatable with ZINC, however can only be programmed using their native syntax.
 
 --------------------------------------------------------
+Compile from source
+
+Fedora/redhat
+
+Insall dependnecies
+```shell
+sudo dnf install g++ ncurses-devel
+```
+
+ubuntu/debian
+
+Insall dependnecies
+```shell
+sudo apt install g++ libncurses5-dev
+```
+
+Arch/Manjaro
+
+Insall dependnecies
+```shell
+sudo pacman -Syu g++ lib32-ncurses
+```
 
 Example Code
 ```c++
