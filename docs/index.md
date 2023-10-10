@@ -4,7 +4,7 @@ Welcome to the Zinc programming language! This documentation will guide you thro
 
 ## Installation
 
-Before you can start using Zinc, you'll need to install the Zinc interpreter. You can download the zinc translator from [Zinc's official website](https://github.com/Talleeenos69/ZINC/blob/main/) and follow the installation instructions for your operating system.
+Before you can start using Zinc, you'll need to install the Zinc translator. You can download the zinc translator from [Zinc's official website](https://github.com/Talleeenos69/ZINC/blob/main/) and follow the installation instructions for your operating system.
 
 ## Hello, World!
 
