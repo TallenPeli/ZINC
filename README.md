@@ -90,9 +90,7 @@ g++ zinc.cpp -o zinc -lncurses
 ./zinc /home/$USER/Documents/ZINC/main.zc -k
 ```
 
-First we need some example code:
-
-### Example Code
+## Example Code
 ```c++
 using zincstd;
 
