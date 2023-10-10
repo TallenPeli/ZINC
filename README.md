@@ -74,7 +74,7 @@ g++ zinc.cpp -o zinc -lncurses
 ```
 
 ### Windows
-[Install the WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and follow the instructions for your distrobution.
+[Install the WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and follow the instructions for your distribution.
 
 
 ## Usage
