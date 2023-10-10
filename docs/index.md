@@ -10,7 +10,7 @@ Before you can start using Zinc, you'll need to install the Zinc interpreter. Yo
 
 Let's start with a simple "Hello, World!" example. Create a new file with the ".zc" extension, e.g., `hello.zc`, and add the following code:
 
-```c
+```rust
 main() {
     println("Hello, Zinc!");
 }
@@ -18,13 +18,13 @@ main() {
 
 Save the file and open your terminal. Navigate to the directory where you saved `hello.zc` and run the following command to execute the Zinc program:
 
-```bash
+```shell
 zinc hello.zc
 ```
 
 You should see the following output:
 
-```
+```shell
 Hello, Zinc!
 ```
 
@@ -34,7 +34,7 @@ Congratulations! You've just run your first Zinc program.
 
 Zinc supports variables for storing and manipulating data. Here's an example of declaring and using variables:
 
-```c
+```rust
 main() {
     string name "Tallen";
     int age = 27;
@@ -54,7 +54,7 @@ In this example, we've defined two variables, `name` and `age`, and printed thei
 
 Functions allow you to organize your code into reusable blocks. Here's how you can define and call a function in Zinc:
 
-```c
+```rust
 // Define a function
 fn greet(name) {
     println("Hello, " + name + "!");
@@ -73,7 +73,7 @@ This code defines a `greet` function that takes a `name` parameter and prints a 
 
 You can use loops to repeat code multiple times. Here's an example of a loop in Zinc:
 
-```c
+```rust
 main() {
     loop(5) {
         println("Hello, Zinc!");
@@ -87,9 +87,9 @@ In this code, we use the `loop` function to print "Hello, Zinc!" five times.
 
 You can get input from the user using the `input` function. Here's how it works:
 
-```c
+```rust
 main() {
-    let name = input("Enter your name: ");
+    string name = input("Enter your name: ");
     println("Hello, " + name + "!");
 }
 ```
