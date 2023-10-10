@@ -73,6 +73,10 @@ Build
 g++ zinc.cpp -o zinc -lncurses
 ```
 
+### Windows
+[Install the WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and follow the instructions for your distrobution.
+
+
 ## Usage
 (The default ZINC file format is .zc but is not required.)
 
