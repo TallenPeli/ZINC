@@ -6,13 +6,13 @@ Welcome to the Zinc programming language! This documentation will guide you thro
 
 Before you can start using Zinc, you'll need to install the Zinc interpreter. You can download the zinc translator from [Zinc's official website](https://github.com/Talleeenos69/ZINC/blob/main/) and follow the installation instructions for your operating system.
 
-## Hello, Zinc!
+## Hello, World!
 
 Let's start with a simple "Hello, World!" example. Create a new file with the ".zc" extension, e.g., `hello.zc`, and add the following code:
 
 ```rust
 main() {
-    println("Hello, Zinc!");
+    println("Hello, World!");
 }
 ```
 
