@@ -20,7 +20,7 @@ sudo dnf install g++ ncurses-devel
 
 clone repository
 ```shell
-git clone https://github.com/Talleeenos69/ZINC/tree/main
+git clone https://github.com/Talleeenos69/ZINC/
 ```
 
 cd into ZINC
@@ -41,7 +41,7 @@ sudo apt install g++ libncurses5-dev
 ```
 clone repository
 ```shell
-git clone https://github.com/Talleeenos69/ZINC/tree/main
+git clone https://github.com/Talleeenos69/ZINC/
 ```
 cd into ZINC
 ```shell
@@ -61,7 +61,7 @@ sudo pacman -Syu g++ lib32-ncurses
 ```
 clone repository
 ```shell
-git clone https://github.com/Talleeenos69/ZINC/tree/main
+git clone https://github.com/Talleeenos69/ZINC/
 ```
 cd into ZINC
 ```shell
