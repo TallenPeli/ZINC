@@ -1,4 +1,3 @@
-```markdown
 # Getting Started with Zinc
 
 Welcome to the Zinc programming language! This documentation will guide you through the basics of writing and running Zinc programs.
@@ -98,6 +97,3 @@ The `input` function prompts the user to enter their name and stores the input i
 This documentation provides a brief introduction to the Zinc programming language. You can explore more advanced features and libraries in the official Zinc documentation.
 
 Happy coding with Zinc!
-```
-
-This Markdown document provides an introduction to getting started with the Zinc programming language, covering installation, basic syntax, variables, functions, loops, and user input. You can customize and expand this document to provide more details and examples as needed.
