@@ -75,13 +75,52 @@ You can use loops to repeat code multiple times. Here's an example of a loop in 
 
 ```rust
 main() {
-    loop(5) {
+    loop(5, i) {
         println("Hello, Zinc!");
     }
 }
 ```
 
-In this code, we use the `loop` function to print "Hello, Zinc!" five times.
+In this code, we use the `loop` function to print "Hello, Zinc!" five times. The "i" is the integer that is being used to loop. This allows for nested loops to use the value of the previous loop for more complex functions.
+
+```rust
+using zincstd;
+
+fn hello(){
+    println("hello");
+}
+
+main(){
+    loop(100,i){
+        loop(i, j){
+            print(" ");
+        }
+        hello();
+    }
+}
+```
+This code defines a "hello()" function which prints the line "hello". In the main() function, there is a loop that runs 100 times with the integer value "i". The code then defines a loop that runs the amount of times as the value "i", then it defines it's own variable "j". The code gives this output:
+
+```shell
+hello
+ hello
+  hello
+   hello
+    hello
+     hello
+      hello
+       hello
+        hello
+         hello
+          hello
+           hello
+            hello
+             hello
+              hello
+               hello
+                hello...
+```
+
 
 ## Input
 
