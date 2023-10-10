@@ -5,18 +5,21 @@
 #include <vector>
 #include <cstdlib>
 #include <functional>
+#include <map>
 
 using namespace std;
 
 bool keepTranslation = false;
+bool isZincFile = false;
 
 string addLibraries(){
     string code;
-    code.append("\n//Standard Zinc functions from zincstd");
-    code.append("\nvoid print(string input){cout << input;}\n");
-    code.append("void println(string input){cout << input << endl;}\n");
-    code.append("string input(string prompt){string Input;cout << prompt;cin >> Input;return Input;}\n");
-    code.append("string getLine(string prompt){string Input;cout << prompt;getline(cin, Input);return(Input);}\n");
+    code.append("\n//Standard Zinc functions from zincstd\n");
+    code.append("template <typename T>");
+    code.append("\nvoid print(const T& input){std::cout << input;}\n");
+    code.append("void println(std::string input){std::cout << input << std::endl;}\n");
+    code.append("std::string input(std::string prompt){std::string Input;std::cout << prompt;std::cin >> Input;return Input;}\n");
+    code.append("std::string getLine(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}\n");
 
     return code;
 }
@@ -51,11 +54,20 @@ int main(int argc, char **argv) {
     // Create a vector to store the translated C++ code
     std::vector<std::string> translatedCode;
 
-    translatedCode.push_back("#include <iostream>\n#include <functional>\nusing namespace std;");
+    translatedCode.push_back("#include <iostream>\n#include <string>");
 
     // Read and process each line of the input script
     std::string line;
+
     while (std::getline(zincFile, line)) {
+        if(line == "using zincstd;" && !isZincFile){
+            isZincFile = true;
+            line.erase();
+            line.append(addLibraries());
+        }else if (!isZincFile){
+            cout << "Error : Not a valid ZINC file [2]" << endl;
+            exit(2);
+        }
 
         // Translate 'fn ' to 'int ' for function declarations
         size_t fnPos = line.find("fn ");
@@ -71,33 +83,27 @@ int main(int argc, char **argv) {
 
         // Translate loops
         size_t loopPos = line.find("loop(");
-        static int loopVarCounter = 0; // Counter for generating unique loop variable names
-
         if (loopPos != std::string::npos) {
             // Check if there is an opening parenthesis
             size_t openParenthesisPos = line.find("(", loopPos);
 
             if (openParenthesisPos != std::string::npos) {
                 // Extract the argument inside the loop function call
-                size_t closeParenthesisPos = line.find(")", openParenthesisPos);
-                if (closeParenthesisPos != std::string::npos) {
-                    std::string loopArgument = line.substr(openParenthesisPos + 1, closeParenthesisPos - openParenthesisPos - 1);
+                size_t variableCommaSplitPos = line.find(",", openParenthesisPos);
+                if (variableCommaSplitPos != std::string::npos) {
+                    string loopArgument = line.substr(openParenthesisPos + 1, variableCommaSplitPos - openParenthesisPos - 1);
 
-                    // Generate a unique loop variable name (i, j, k, etc.)
-                    char loopVarName = 'i' + loopVarCounter;
-                    loopVarCounter++;
+                    // Check the nesting level to determine the loop variable name
+                    
+                    size_t closeParenthsisPos = line.find(")", variableCommaSplitPos);
+                    
+                    string loopVarName = line.substr(variableCommaSplitPos + 1, closeParenthsisPos - variableCommaSplitPos - 1);
 
                     // Replace the loop function call with a for loop
-                    line.replace(loopPos, closeParenthesisPos - loopPos + 1,
-                        "for(int " + std::string(1, loopVarName) + " = 0; " + std::string(1, loopVarName) + " < " + loopArgument + "; " + std::string(1, loopVarName) + "++)");
+                    line.replace(loopPos, closeParenthsisPos - loopPos + 1,
+                        "for(int " + loopVarName + " = 0; " + loopVarName + " < " + loopArgument + "; " + loopVarName + "++)");
                 }
             }
-        }
-
-        // Translate 'using zinc;' to a comment in C++
-        if (line.find("using zincstd;") != std::string::npos) {
-            line.erase();
-            line.append(addLibraries());
         }
 
         // Add the translated line to the vector
