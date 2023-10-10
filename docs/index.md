@@ -25,7 +25,7 @@ zinc hello.zc
 You should see the following output:
 
 ```shell
-Hello, Zinc!
+Hello, World!
 ```
 
 Congratulations! You've just run your first Zinc program.
