@@ -73,7 +73,26 @@ Build
 g++ zinc.cpp -o zinc -lncurses
 ```
 
-Example Code
+## Usage
+(The default ZINC file format is .zc but is not required.)
+
+```shell
+[zinc executable] {zinc script} [flags]
+```
+
+### Flags
+```shell
+-k or --keep-translation (Keeps the generated c++ file even after compilation)
+```
+
+### Example Usage
+```shell
+./zinc /home/$USER/Documents/ZINC/main.zc -k
+```
+
+First we need some example code:
+
+### Example Code
 ```c++
 using zincstd;
 
