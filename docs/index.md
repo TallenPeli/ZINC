@@ -126,6 +126,24 @@ hello
 
 This code showcases how loops and nested loops can be used to create more complex patterns and behaviors in Zinc.
 
+### Notes about loops
+Multiple loops cannot be on the same line.
+
+Bad code:
+```rust
+main(){
+    loop(100, i){loop(i, j){print("hello");}};
+}
+```
+Good code:
+```rust
+main(){
+    loop(100, i){
+        loop(i, j){print("hello");}
+    }
+}
+```
+
 ## Input
 
 You can get input from the user using the `input` function. Here's how it works:
