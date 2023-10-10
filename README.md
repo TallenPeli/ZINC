@@ -18,11 +18,39 @@ Insall dependnecies
 sudo dnf install g++ ncurses-devel
 ```
 
+clone repository
+```shell
+git clone https://github.com/Talleeenos69/ZINC/tree/main
+```
+
+cd into ZINC
+```shell
+cd ./ZINC
+```
+
+Build
+```shell
+g++ zinc.cpp -o zinc -lncurses
+```
+
 ### ubuntu/debian
 
 Insall dependnecies
 ```shell
 sudo apt install g++ libncurses5-dev
+```
+clone repository
+```shell
+git clone https://github.com/Talleeenos69/ZINC/tree/main
+```
+cd into ZINC
+```shell
+cd ./ZINC
+```
+
+Build
+```shell
+g++ zinc.cpp -o zinc -lncurses
 ```
 
 ### Arch/Manjaro
@@ -30,6 +58,19 @@ sudo apt install g++ libncurses5-dev
 Insall dependnecies
 ```shell
 sudo pacman -Syu g++ lib32-ncurses
+```
+clone repository
+```shell
+git clone https://github.com/Talleeenos69/ZINC/tree/main
+```
+cd into ZINC
+```shell
+cd ./ZINC
+```
+
+Build
+```shell
+g++ zinc.cpp -o zinc -lncurses
 ```
 
 Example Code
