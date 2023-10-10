@@ -4,7 +4,7 @@ Welcome to the Zinc programming language! This documentation will guide you thro
 
 ## Installation
 
-Before you can start using Zinc, you'll need to install the Zinc interpreter. You can download the interpreter from [Zinc's official website](https://zinc-lang.com/) and follow the installation instructions for your operating system.
+Before you can start using Zinc, you'll need to install the Zinc interpreter. You can download the zinc translator from [Zinc's official website](https://github.com/Talleeenos69/ZINC/blob/main/) and follow the installation instructions for your operating system.
 
 ## Hello, Zinc!
 
@@ -36,8 +36,12 @@ Zinc supports variables for storing and manipulating data. Here's an example of 
 
 ```zinc
 main() {
-    let name = "Alice";
-    let age = 30;
+    string name "Tallen";
+    int age = 27;
+    bool isHuman = false;
+    const int birthday = 26;
+    double testDouble = 19.99;
+    char letter = 'a';
     
     println("Name: " + name);
     println("Age: " + age);
@@ -91,9 +95,3 @@ main() {
 ```
 
 The `input` function prompts the user to enter their name and stores the input in the `name` variable.
-
-## Conclusion
-
-This documentation provides a brief introduction to the Zinc programming language. You can explore more advanced features and libraries in the official Zinc documentation.
-
-Happy coding with Zinc!
