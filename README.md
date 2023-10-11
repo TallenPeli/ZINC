@@ -88,10 +88,13 @@ g++ zinc.cpp -o zinc -lncurses
 ```shell
 -k or --keep-translation (Keeps the generated c++ file even after compilation)
 ```
+```shell
+-v or --verbose (Verbose output - tells you exactly what's going on)
+```
 
 ### Example Usage
 ```shell
-./zinc /home/$USER/Documents/ZINC/main.zc -k
+./zinc /home/$USER/Documents/ZINC/main.zc -k -v
 ```
 
 ## Example Code
