@@ -11,7 +11,7 @@ main(){
 
     loop(word.size(), i){
         loop(i, j){
-            print(word_list[j]);
+            print(word_list[abs(i-word.length())]);
         }
         print(" ");
         loop(abs(i-word.size()), k){

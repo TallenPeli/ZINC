@@ -24,7 +24,7 @@ int main(){
 
     for(int  i = 0;  i < word.size();  i++){
         for(int  j = 0;  j < i;  j++){
-            print(word_list[j]);
+            print(word_list[abs(i-word.length())]);
         }
         print(" ");
         for(int  k = 0;  k < abs(i-word.size());  k++){
