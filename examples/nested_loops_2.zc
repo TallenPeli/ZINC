@@ -19,7 +19,6 @@ main(){
         }
         newline();
     }
-
-    // Don't forget to release the allocated memory when done
+    
     delete[] word_list;
 }

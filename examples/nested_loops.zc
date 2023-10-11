@@ -1,5 +1,9 @@
 using zincstd;
 
+string hi;fn hello(){
+    print("Hello");
+}
+
 main(){
     loop(20, i){
         loop(i, j){

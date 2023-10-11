@@ -31,11 +31,19 @@ void flagHandler(int flagPos, char **flag){
         file = file.substr(2);
     }
 
-    for (int i = 2; i < flagPos; i++) {
-        string arg = flag[i];
-        if (arg == "-k" || arg == "--keep-translation") {
+    if (flagPos >= 3) {
+        string arg2 = flag[2];
+        if (arg2 == "-k" || arg2 == "--keep-translation") {
             keepTranslation = true;
-        } else if (arg == "-v" || arg == "--verbose") {
+        }else if(arg2 == "-v" || arg2 == "--verbose") {
+            verboseOutput = true;
+        }
+    }
+    if (flagPos >= 4) {
+        string arg3 = flag[3];
+        if (arg3 == "-k" || arg3 == "--keep-translation") {
+            keepTranslation = true;
+        }else if(arg3 == "-v" || arg3 == "--verbose") {
             verboseOutput = true;
         }
     }
@@ -61,8 +69,10 @@ void compileCode(){
             cout << "| Compilation successful." << endl;
         }
         runCode();
-        if(keepTranslation && verboseOutput){
-            cout << "\n| Kept c++ translation.\n";
+        if(keepTranslation){
+            if(verboseOutput){
+                cout << "\n| Kept c++ translation.\n";
+            }
         }else{
             system("rm ./zinc_to.cpp");
         }
@@ -113,14 +123,14 @@ int main(int argc, char **argv) {
         }
 
         // Translate 'fn ' to 'int ' for function declarations
-        size_t fnPos = line.find("fn ");
-        if (fnPos == 0 || (fnPos != std::string::npos && line[fnPos - 1] == ' ')) {
-            line.replace(fnPos, 3, "void ");
+        size_t fnPos = line.find("fn");
+        if (fnPos == 0 || (fnPos != std::string::npos && (line[fnPos - 1] == ' ' || line[fnPos - 1] == ';' || line[fnPos - 1] == '}'|| line[fnPos - 1] == '{'))) {
+            line.replace(fnPos, 2, "void ");
         }
 
         // Translate main
         size_t mainPos = line.find("main()");
-        if (mainPos == 0 || (mainPos != std::string::npos && line[mainPos - 1] == ' ')) {
+        if (mainPos == 0 || (mainPos != std::string::npos && (line[mainPos - 1] == ' ' || line[mainPos - 1] == ';' || line[mainPos - 1] == '}'|| line[mainPos - 1] == '{'))) {
             line.replace(mainPos, 0, "int ");
         }
 
