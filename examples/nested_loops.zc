@@ -1,0 +1,10 @@
+using zincstd;
+
+main(){
+    loop(20, i){
+        loop(i, j){
+            print(" ");
+        }
+        println("Hello");
+    }
+}
