@@ -5,45 +5,88 @@
 #include <vector>
 #include <cstdlib>
 #include <functional>
-#include <map>
 
 using namespace std;
 
 bool keepTranslation = false;
+bool verboseOutput = false;
 bool isZincFile = false;
 
 string addLibraries(){
     string code;
     code.append("\n//Standard Zinc functions from zincstd\n");
-    code.append("template <typename T>");
-    code.append("\nvoid print(const T& input){std::cout << input;}\n");
-    code.append("void println(std::string input){std::cout << input << std::endl;}\n");
+    code.append("template <typename T>\nvoid print(const T& input){std::cout << input;}\n");
+    code.append("template <typename T>\nvoid println(const T& input = T()) { if constexpr (!std::is_void_v<T>) std::cout << input << std::endl; }\n");
+    code.append("void println(){std::cout << std::endl;}\n");
+    code.append("void newline(){std::cout << std::endl;}\n");
     code.append("std::string input(std::string prompt){std::string Input;std::cout << prompt;std::cin >> Input;return Input;}\n");
-    code.append("std::string getLine(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}\n");
-
+    code.append("std::string getline(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}\n");
+    
     return code;
 }
 
-int main(int argc, char **argv) {
+void flagHandler(int flagPos, char **flag){
+    string file = flag[1];
+    if (file.substr(0, 2) == "./") {
+        file = file.substr(2);
+    }
 
-    if (argc >= 3) {
-        string arg2 = argv[2];
-        if (arg2 == "-k" || arg2 == "--keep-translation") {
+    for (int i = 2; i < flagPos; i++) {
+        string arg = flag[i];
+        if (arg == "-k" || arg == "--keep-translation") {
             keepTranslation = true;
+        } else if (arg == "-v" || arg == "--verbose") {
+            verboseOutput = true;
         }
     }
+
+    if(verboseOutput){
+        cout << "| Verbose output: [True]" << endl;
+        cout << "| Keep translation: [" << (keepTranslation ? "True" : "False") << "]" << endl;
+    }
+}
+
+void runCode(){
+    if(verboseOutput){
+        cout << "| Running the program..." << endl;
+    }
+    system("./zinc_output");
+}
+
+void compileCode(){
+    int compileResult = system("g++ -o zinc_output zinc_to.cpp");
+
+    if (compileResult == 0) {
+        if(verboseOutput){
+            cout << "| Compilation successful." << endl;
+        }
+        runCode();
+        if(keepTranslation && verboseOutput){
+            cout << "\n| Kept c++ translation.\n";
+        }else{
+            system("rm ./zinc_to.cpp");
+        }
+
+    } else {
+        // Compilation failed
+        cerr << "| Compilation failed. Please check the code for errors." << std::endl;
+    }
+}
+
+int main(int argc, char **argv) {
+    // Define functions
+    flagHandler(argc, argv);
 
     char cwd[1024];
 
     string argument = argv[1];
 
-    if (argument.substr(0, 2) == "./") {
-        argument = argument.substr(2);
-    }
-
     string tmpcwd = getcwd(cwd, sizeof(cwd));
     string fullcwd = tmpcwd + "/" + argument;
-    cout << "Full path: " << fullcwd << endl;
+
+    if(verboseOutput){
+        cout << "| Full path [" << fullcwd << "]" << endl;
+    }
 
     ifstream zincFile(fullcwd.c_str());
     if (!zincFile.is_open()) {
@@ -54,7 +97,7 @@ int main(int argc, char **argv) {
     // Create a vector to store the translated C++ code
     std::vector<std::string> translatedCode;
 
-    translatedCode.push_back("#include <iostream>\n#include <string>");
+    translatedCode.push_back("#include <iostream>\n#include <string>\n#include <type_traits>");
 
     // Read and process each line of the input script
     std::string line;
@@ -79,6 +122,11 @@ int main(int argc, char **argv) {
         size_t mainPos = line.find("main()");
         if (mainPos == 0 || (mainPos != std::string::npos && line[mainPos - 1] == ' ')) {
             line.replace(mainPos, 0, "int ");
+        }
+
+        size_t stringPos = line.find("string");
+        if (stringPos == 0 || (stringPos != std::string::npos && (line[stringPos - 1] == ' ' || line[stringPos - 1] == ';' || line[stringPos - 1] == '}'|| line[stringPos - 1] == '{'))) {
+            line.replace(stringPos, 6, "std::string");
         }
 
         // Translate loops
@@ -115,6 +163,7 @@ int main(int argc, char **argv) {
 
     // Output the translated C++ code to a file
     std::ofstream outputFile("zinc_to.cpp");
+
     if (!outputFile.is_open()) {
         std::cerr << "Error: Unable to create output file." << std::endl;
         return 1;
@@ -124,27 +173,12 @@ int main(int argc, char **argv) {
         outputFile << translatedLine << std::endl;
     }
 
+    compileCode();
+
     // Close the output file
     outputFile.close();
 
     // Compile the saved C++ code
-    int compileResult = system("g++ -o zinc_output zinc_to.cpp");
-
-    if (compileResult == 0) {
-        // Compilation was successful
-        std::cout << "Compilation successful. Running the program..." << std::endl;
-        system("./zinc_output"); // Run the compiled program
-
-        if(keepTranslation == true){
-            cout << "\nKept c++ translation.\n";
-        }else{
-            system("rm ./zinc_to.cpp");
-        }
-
-    } else {
-        // Compilation failed
-        std::cerr << "Compilation failed. Please check the code for errors." << std::endl;
-    }
 
     return 0;
 }
