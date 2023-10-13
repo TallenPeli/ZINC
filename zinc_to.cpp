@@ -13,15 +13,10 @@ std::string input(std::string prompt){std::string Input;std::cout << prompt;std:
 std::string getline(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}
 
 
-std::string hi;void  hello(){
-    print("Hello");
-}
+std::string names[3] = {"hi", "hello", "ok"};
+
+std::string names2[names.length()]; // creates a list with a set size, does not require content
 
 int main(){
-    for(int  i = 0;  i < 20;  i++){
-        for(int  j = 0;  j < i;  j++){
-            print(" ");
-        }
-        println("Hello");
-    }
+    
 }

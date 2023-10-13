@@ -2,7 +2,7 @@ using zincstd;
 
 string word = "abcdefghijklmnopqrstuvwxyz";
 
-char* word_list = new char[word.length()];
+word_list{word.length()};
 
 main(){
     loop(word.length(), a){
@@ -19,6 +19,6 @@ main(){
         }
         newline();
     }
-    
+
     delete[] word_list;
 }

@@ -83,6 +83,17 @@ void compileCode(){
     }
 }
 
+string join(const vector<string>& elements, const string& delimiter) {
+    string result;
+    for (size_t i = 0; i < elements.size(); ++i) {
+        result += elements[i];
+        if (i < elements.size() - 1) {
+            result += delimiter;
+        }
+    }
+    return result;
+}
+
 int main(int argc, char **argv) {
     // Define functions
     flagHandler(argc, argv);
@@ -141,7 +152,7 @@ int main(int argc, char **argv) {
 
         // Translate loops
         size_t loopPos = line.find("loop(");
-        if (loopPos != std::string::npos) {
+        if (loopPos == 0 || loopPos != std::string::npos && (line[loopPos - 1] == ' ' || line[loopPos - 1] == ';' || line[loopPos - 1] == '}' || line[loopPos - 1] == '{')) {
             // Check if there is an opening parenthesis
             size_t openParenthesisPos = line.find("(", loopPos);
 
@@ -160,6 +171,41 @@ int main(int argc, char **argv) {
                     // Replace the loop function call with a for loop
                     line.replace(loopPos, closeParenthsisPos - loopPos + 1,
                         "for(int " + loopVarName + " = 0; " + loopVarName + " < " + loopArgument + "; " + loopVarName + "++)");
+                }
+            }
+        }
+
+        // Translate lists
+        size_t listPos = line.find("list ");
+        if (listPos != std::string::npos) {
+            // Find the list name
+            size_t spaceAfterList = line.find("[", listPos + 5);
+            if (spaceAfterList != std::string::npos) {
+                string listName = line.substr(listPos + 5, spaceAfterList - listPos - 5);
+
+                // Find the opening bracket of the list
+                size_t openBracketPos = line.find("[");
+                if (openBracketPos != std::string::npos) {
+                    // Find the closing bracket of the list
+                    size_t closeBracketPos = line.find("]", openBracketPos);
+                    if (closeBracketPos != std::string::npos) {
+                        // Extract the list contents
+                        string listContents = line.substr(openBracketPos + 1, closeBracketPos - openBracketPos - 1);
+
+                        // Tokenize the list contents by comma
+                        vector<string> items;
+                        size_t start = 0;
+                        size_t commaPos;
+                        while ((commaPos = listContents.find(",", start)) != std::string::npos) {
+                            items.push_back(listContents.substr(start, commaPos - start));
+                            start = commaPos + 2;  // Skip the comma and the space
+                        }
+                        // Add the last item
+                        items.push_back(listContents.substr(start));
+
+                        // Generate the C++ array declaration
+                        line = "std::string " + listName + "[" + to_string(items.size()) + "] = {" + join(items, ", ") + "};";
+                    }
                 }
             }
         }
