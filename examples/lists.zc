@@ -2,7 +2,7 @@ using zincstd;
 
 list names["hi", "hello", "ok"]; // creates a list with values and calculates the size
 
-string names2{3}; // creates a list with a set size, does not require content
+list names2{3}; // creates a list with a set size, does not require content
 
 main(){
     

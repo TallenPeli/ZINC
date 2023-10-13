@@ -178,7 +178,7 @@ int main(int argc, char **argv) {
         // Translate lists
         size_t listPos = line.find("list ");
         if (listPos != std::string::npos) {
-            // Find the list name
+            // Find the list name 
             size_t spaceAfterList = line.find("[", listPos + 5);
             if (spaceAfterList != std::string::npos) {
                 string listName = line.substr(listPos + 5, spaceAfterList - listPos - 5);
