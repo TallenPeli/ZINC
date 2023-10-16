@@ -11,11 +11,14 @@ using namespace std;
 bool keepTranslation = false;
 bool verboseOutput = false;
 bool isZincFile = false;
+string optimizationList[6] = {"-O0", "-O1", "-O2", "-O3", "-Os", "-Ofast"};
+int optimization = 0;
 
 string addLibraries(){
     string code;
     code.append("\n//Standard Zinc functions from zincstd\n");
     code.append("template <typename T>\nvoid print(const T& input){std::cout << input;}\n");
+    code.append("void print(std::string input){std::cout << input;}\n");
     code.append("template <typename T>\nvoid println(const T& input = T()) { if constexpr (!std::is_void_v<T>) std::cout << input << std::endl; }\n");
     code.append("void println(){std::cout << std::endl;}\n");
     code.append("void newline(){std::cout << std::endl;}\n");
@@ -25,32 +28,37 @@ string addLibraries(){
     return code;
 }
 
-void flagHandler(int flagPos, char **flag){
+void flagHandler(int FlagAmt, char **flag){
     string file = flag[1];
     if (file.substr(0, 2) == "./") {
         file = file.substr(2);
     }
 
-    if (flagPos >= 3) {
-        string arg2 = flag[2];
-        if (arg2 == "-k" || arg2 == "--keep-translation") {
+    for (int i = 2; i < FlagAmt; i++) {
+        string arg = flag[i];
+        if (arg == "-k" || arg == "--keep-translation") {
             keepTranslation = true;
-        }else if(arg2 == "-v" || arg2 == "--verbose") {
+        }else if(arg == "-v" || arg == "--verbose") {
             verboseOutput = true;
-        }
-    }
-    if (flagPos >= 4) {
-        string arg3 = flag[3];
-        if (arg3 == "-k" || arg3 == "--keep-translation") {
-            keepTranslation = true;
-        }else if(arg3 == "-v" || arg3 == "--verbose") {
-            verboseOutput = true;
+        }else if(arg == "-O0"){
+            optimization = 0;
+        }else if(arg == "-O1"){
+            optimization = 1;
+        }else if(arg == "-O2"){
+            optimization = 2;
+        }else if(arg == "-O3"){
+            optimization = 3;
+        }else if(arg == "-Os"){
+            optimization = 4;
+        }else if(arg == "-Ofast"){
+            optimization = 5;
         }
     }
 
     if(verboseOutput){
         cout << "| Verbose output: [True]" << endl;
         cout << "| Keep translation: [" << (keepTranslation ? "True" : "False") << "]" << endl;
+        cout << "| Optimization : [" << optimizationList[optimization] << "]" << endl;
     }
 }
 
@@ -62,7 +70,11 @@ void runCode(){
 }
 
 void compileCode(){
-    int compileResult = system("g++ -o zinc_output zinc_to.cpp");
+    std::string compilerFlags = optimizationList[optimization];
+    std::string command = "g++ -o zinc_output zinc_to.cpp " + compilerFlags;
+    
+    cout << "| Compiling with [" << compilerFlags << "]" << endl;
+    int compileResult = system(command.c_str());
 
     if (compileResult == 0) {
         if(verboseOutput){
