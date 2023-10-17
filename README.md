@@ -88,19 +88,19 @@ Certainly! Here's the documentation for the `-k`, `-v`, and optimization flags a
 
 ### Flags
 
-```shell
+```
 -k or --keep-translation (Keeps the generated C++ file even after compilation)
 ```
 
-```shell
+```
 -v or --verbose (Verbose output - tells you exactly what's going on)
 ```
 
-```shell
+```
 -O0, -O1, -O2, -O3, -Os, -Ofast (Control the level of optimization during compilation)
 ```
 
-```shell
+```
 -asm or --assembly (Generate assembly code instead of an executable)
 ```
 
