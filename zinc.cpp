@@ -11,8 +11,24 @@ using namespace std;
 bool keepTranslation = false;
 bool verboseOutput = false;
 bool isZincFile = false;
+bool compileToAsssembly =  false;
+
 string optimizationList[6] = {"-O0", "-O1", "-O2", "-O3", "-Os", "-Ofast"};
 int optimization = 0;
+
+
+// Colour definitions
+
+/*======================*/
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define WHITE   "\033[37m"
+/*======================*/
 
 string addLibraries(){
     string code;
@@ -52,46 +68,62 @@ void flagHandler(int FlagAmt, char **flag){
             optimization = 4;
         }else if(arg == "-Ofast"){
             optimization = 5;
+        }else if(arg == "-asm" || arg == "--assembly"){
+            compileToAsssembly = true;
         }
     }
 
     if(verboseOutput){
-        cout << "| Verbose output: [True]" << endl;
-        cout << "| Keep translation: [" << (keepTranslation ? "True" : "False") << "]" << endl;
-        cout << "| Optimization : [" << optimizationList[optimization] << "]" << endl;
+        cout << "| Verbose output: [" << GREEN << "True" << RESET << "]" << endl;
+        cout << "| Assembly Output: [" << (compileToAsssembly ? GREEN : RED) << (compileToAsssembly ? "True" : "False") << RESET << "]" << endl;
+        cout << "| Keep translation: [" << (keepTranslation ? GREEN : RED) << (keepTranslation ? "True" : "False") << RESET << "]" << endl;
+        cout << "| Optimization : [" << MAGENTA << optimizationList[optimization] << RESET << "]" << endl;
     }
 }
 
 void runCode(){
     if(verboseOutput){
-        cout << "| Running the program..." << endl;
+        cout << "| " << CYAN << "Running the program..." << RESET << endl;
     }
     system("./zinc_output");
 }
 
 void compileCode(){
-    std::string compilerFlags = optimizationList[optimization];
-    std::string command = "g++ -o zinc_output zinc_to.cpp " + compilerFlags;
+    string compilerFlags = optimizationList[optimization];
     
-    cout << "| Compiling with [" << compilerFlags << "]" << endl;
-    int compileResult = system(command.c_str());
-
-    if (compileResult == 0) {
-        if(verboseOutput){
-            cout << "| Compilation successful." << endl;
-        }
-        runCode();
-        if(keepTranslation){
-            if(verboseOutput){
-                cout << "\n| Kept c++ translation.\n";
-            }
+    if(verboseOutput == true){
+        if(compileToAsssembly == false){
+            cout << "| Compiling with [" << MAGENTA << compilerFlags << RESET << "]" << endl;
         }else{
-            system("rm ./zinc_to.cpp");
+            cout << "| Compiling to assembly. [" << MAGENTA << "zinc_to.asm" << RESET << "] " << "[" << MAGENTA << compilerFlags << RESET << "]"<< endl;
         }
+    }
 
-    } else {
-        // Compilation failed
-        cerr << "| Compilation failed. Please check the code for errors." << std::endl;
+    if(compileToAsssembly == false){
+        string command = "g++ -o zinc_output zinc_to.cpp " + compilerFlags;
+
+        int compileResult = system(command.c_str());
+
+        if (compileResult == 0) {
+            if(verboseOutput){
+                cout << "| " << GREEN << "Compilation successful." << RESET << endl;
+            }
+            runCode();
+            if(keepTranslation){
+                if(verboseOutput){
+                    cout << "\n| " << MAGENTA << "Kept c++ translation.\n" << RESET;
+                }
+            }else{
+                system("rm ./zinc_to.cpp");
+            }
+
+        } else {
+            // Compilation failed
+            cerr << "| " << RED << "Compilation failed. Please check the code for errors." << RESET << std::endl;
+        }
+    }else{
+        string command = "g++ -S -o zinc_to.asm zinc_to.cpp " + compilerFlags;
+        system(command.c_str());
     }
 }
 
@@ -245,8 +277,6 @@ int main(int argc, char **argv) {
 
     // Close the output file
     outputFile.close();
-
-    // Compile the saved C++ code
 
     return 0;
 }

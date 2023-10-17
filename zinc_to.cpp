@@ -14,8 +14,6 @@ std::string input(std::string prompt){std::string Input;std::cout << prompt;std:
 std::string getline(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}
 
 
-std::string names[3] = {"hi", "hello", "ok"};
-
 int main(){
-    print("Hello world");
+    std::cout << "Hello" << std::endl;
 }

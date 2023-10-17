@@ -1,7 +1,5 @@
 using zincstd;
 
-list names["hi", "hello", "ok"]; // creates a list with values and calculates the size
-
 main(){
-    print("Hello world");
+    std::cout << "Hello" << std::endl;
 }
