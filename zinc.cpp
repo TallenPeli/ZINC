@@ -30,8 +30,10 @@ int optimization = 0;
 #define WHITE   "\033[37m"
 /*======================*/
 
-string addLibraries(){
+// Add functions at the top of the translated C++ file
+string addCPPCode(){
     string code;
+    code.append("#include <iostream>\n#include <string>\n#include <type_traits>");
     code.append("\n//Standard Zinc functions from zincstd\n");
     code.append("template <typename T>\nvoid print(const T& input){std::cout << input;}\n");
     code.append("void print(std::string input){std::cout << input;}\n");
@@ -162,8 +164,6 @@ int main(int argc, char **argv) {
     // Create a vector to store the translated C++ code
     std::vector<std::string> translatedCode;
 
-    translatedCode.push_back("#include <iostream>\n#include <string>\n#include <type_traits>");
-
     // Read and process each line of the input script
     std::string line;
 
@@ -171,7 +171,7 @@ int main(int argc, char **argv) {
         if(line == "using zincstd;" && !isZincFile){
             isZincFile = true;
             line.erase();
-            line.append(addLibraries());
+            line.append(addCPPCode());
         }else if (!isZincFile){
             cout << "Error : Not a valid ZINC file [2]" << endl;
             exit(2);
