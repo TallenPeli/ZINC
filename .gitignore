@@ -20,5 +20,6 @@
 zinc_output
 zinc_to.cpp
 zinc_to.asm
+zinc
 
 # End of https://www.toptal.com/developers/gitignore/api/linux
