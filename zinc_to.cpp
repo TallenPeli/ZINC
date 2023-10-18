@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <type_traits>
-
 //Standard Zinc functions from zincstd
 template <typename T>
 void print(const T& input){std::cout << input;}
@@ -14,9 +13,9 @@ std::string input(std::string prompt){std::string Input;std::cout << prompt;std:
 std::string getline(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}
 
 
-std::string word = "abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+<>?:{}|";
+std::string word = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
 
-std::string word_list[56];
+std::string word_list[100];
 
 int main(){
     for(int  a = 0;  a < word.length();  a++){
@@ -25,12 +24,12 @@ int main(){
 
     for(int  i = 0;  i < word.size();  i++){
         for(int  j = 0;  j < i;  j++){
-            print(word_list[abs(i-word.length())]);
+            print(word_list[abs(j-word.length())]);
         }
-	print(" ");
+        print(" ");
         for(int  k = 0;  k < abs(i-word.size());  k++){
             print(word_list[k]);
         }
-	newline();
+        newline();
     }
 }
