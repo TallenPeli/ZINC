@@ -179,8 +179,31 @@ int main(int argc, char **argv) {
 
         // Translate 'fn ' to 'int ' for function declarations
         size_t fnPos = line.find("fn");
-        if (fnPos == 0 || (fnPos != std::string::npos && (line[fnPos - 1] == ' ' || line[fnPos - 1] == ';' || line[fnPos - 1] == '}'|| line[fnPos - 1] == '{'))) {
+        if (fnPos == 0 || (fnPos != string::npos && (line[fnPos - 1] == ' ' || line[fnPos - 1] == ';' || line[fnPos - 1] == '}'|| line[fnPos - 1] == '{'))) {
             line.replace(fnPos, 2, "void ");
+        }
+
+        size_t letPos = line.find("let ");
+        if(letPos == 0 || (letPos != string::npos && (line[letPos - 1] == ' ' || line[letPos - 1] == ';' || line[letPos - 1] == '}' || line[letPos - 1] == '{'))){
+            size_t equalsPos = line.find("=");
+
+            if((line[equalsPos + 1] == ' ' && line[equalsPos + 2] == '"') || line[equalsPos + 1] == '"'){
+                size_t startQuotePos = line.find('"');
+                if (startQuotePos != std::string::npos) {
+                    size_t endQuotePos = line.find('"', startQuotePos + 1);
+                
+                    if (endQuotePos != std::string::npos) {
+                        int length = endQuotePos - startQuotePos - 1;
+                        if(length > 1){
+                            line.replace(letPos, 4, "std::string ");
+                        }else{
+                            line.replace(letPos, 4, "auto ");
+                        }
+                    }
+                }
+            }else{
+                line.replace(letPos, 4, "auto ");
+            }
         }
 
         // Translate main

@@ -1,10 +1,13 @@
 using zincstd;
 
-string word = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
+let word = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()";
 
 string word_list[100];
 
 main(){
+    loop(100, variable){
+        print(variable);
+    }
     loop(word.length(), a){
         word_list[a] = word[a];
     }
