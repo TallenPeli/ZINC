@@ -18,7 +18,6 @@ bool compileToAsssembly =  false;
 string optimizationList[6] = {"-O0", "-O1", "-O2", "-O3", "-Os", "-Ofast"};
 int optimization = 0;
 
-
 // Colour definitions
 
 /*======================*/
@@ -249,6 +248,9 @@ int main(int argc, char **argv) {
         if (listPos != std::string::npos) {
             // Find the list name 
             size_t spaceAfterList = line.find("[", listPos + 5);
+            // Make a variable to determine the type of variable that the list is composed of
+            std::string listType;
+
             if (spaceAfterList != std::string::npos) {
                 string listName = line.substr(listPos + 5, spaceAfterList - listPos - 5);
 
@@ -273,7 +275,7 @@ int main(int argc, char **argv) {
                         items.push_back(listContents.substr(start));
 
                         // Generate the C++ array declaration
-                        line = "std::string " + listName + "[" + to_string(items.size()) + "] = {" + join(items, ", ") + "};";
+                        line = listName + "[" + to_string(items.size()) + "] = {" + join(items, ", ") + "};";
                     }
                 }
             }
