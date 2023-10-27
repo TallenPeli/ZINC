@@ -1,5 +1,3 @@
-// This is the zinc development branch
-
 #include <iostream>
 #include <fstream>
 #include <string>
