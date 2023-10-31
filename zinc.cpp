@@ -120,7 +120,7 @@ void compileCode(){
 
         } else {
             // Compilation failed
-            cerr << "| " << RED << "Compilation failed. Please check the code for errors." << RESET << std::endl;
+            cerr << "| " << RED << "Compilation failed. Please check the code for errors." << RESET << endl;
         }
     }else{
         string command = "g++ -S -o zinc_to.asm zinc_to.cpp " + compilerFlags;
@@ -161,12 +161,12 @@ int main(int argc, char **argv) {
     }
 
     // Create a vector to store the translated C++ code
-    std::vector<std::string> translatedCode;
+    vector<string> translatedCode;
 
     // Read and process each line of the input script
-    std::string line;
+    string line;
 
-    while (std::getline(zincFile, line)) {
+    while (getline(zincFile, line)) {
         if(line == "using zincstd;" && !isZincFile){
             isZincFile = true;
             line.erase();
@@ -188,10 +188,10 @@ int main(int argc, char **argv) {
 
             if((line[equalsPos + 1] == ' ' && line[equalsPos + 2] == '"') || line[equalsPos + 1] == '"'){
                 size_t startQuotePos = line.find('"');
-                if (startQuotePos != std::string::npos) {
+                if (startQuotePos != string::npos) {
                     size_t endQuotePos = line.find('"', startQuotePos + 1);
                 
-                    if (endQuotePos != std::string::npos) {
+                    if (endQuotePos != string::npos) {
                         int length = endQuotePos - startQuotePos - 1;
                         if(length > 1){
                             line.replace(letPos, 4, "std::string ");
@@ -207,25 +207,25 @@ int main(int argc, char **argv) {
 
         // Translate main
         size_t mainPos = line.find("main()");
-        if (mainPos == 0 || (mainPos != std::string::npos && (line[mainPos - 1] == ' ' || line[mainPos - 1] == ';' || line[mainPos - 1] == '}'|| line[mainPos - 1] == '{'))) {
+        if (mainPos == 0 || (mainPos != string::npos && (line[mainPos - 1] == ' ' || line[mainPos - 1] == ';' || line[mainPos - 1] == '}'|| line[mainPos - 1] == '{'))) {
             line.replace(mainPos, 0, "int ");
         }
 
         size_t stringPos = line.find("string");
-        if (stringPos == 0 || (stringPos != std::string::npos && (line[stringPos - 1] == ' ' || line[stringPos - 1] == ';' || line[stringPos - 1] == '}'|| line[stringPos - 1] == '{'))) {
+        if (stringPos == 0 || (stringPos != string::npos && (line[stringPos - 1] == ' ' || line[stringPos - 1] == ';' || line[stringPos - 1] == '}'|| line[stringPos - 1] == '{'))) {
             line.replace(stringPos, 6, "std::string");
         }
 
         // Translate loops
         size_t loopPos = line.find("loop(");
-        if (loopPos == 0 || loopPos != std::string::npos && (line[loopPos - 1] == ' ' || line[loopPos - 1] == ';' || line[loopPos - 1] == '}' || line[loopPos - 1] == '{')) {
+        if (loopPos == 0 || loopPos != string::npos && (line[loopPos - 1] == ' ' || line[loopPos - 1] == ';' || line[loopPos - 1] == '}' || line[loopPos - 1] == '{')) {
             // Check if there is an opening parenthesis
             size_t openParenthesisPos = line.find("(", loopPos);
 
-            if (openParenthesisPos != std::string::npos) {
+            if (openParenthesisPos != string::npos) {
                 // Extract the argument inside the loop function call
                 size_t variableCommaSplitPos = line.find(",", openParenthesisPos);
-                if (variableCommaSplitPos != std::string::npos) {
+                if (variableCommaSplitPos != string::npos) {
                     string loopArgument = line.substr(openParenthesisPos + 1, variableCommaSplitPos - openParenthesisPos - 1);
 
                     // Check the nesting level to determine the loop variable name
@@ -243,21 +243,21 @@ int main(int argc, char **argv) {
 
         // Translate lists
         size_t listPos = line.find("list ");
-        if (listPos != std::string::npos) {
+        if (listPos != string::npos) {
             // Find the list name 
             size_t spaceAfterList = line.find("[", listPos + 5);
             // Make a variable to determine the type of variable that the list is composed of
-            std::string listType;
+            string listType;
 
-            if (spaceAfterList != std::string::npos) {
+            if (spaceAfterList != string::npos) {
                 string listName = line.substr(listPos + 5, spaceAfterList - listPos - 5);
 
                 // Find the opening bracket of the list
                 size_t openBracketPos = line.find("[");
-                if (openBracketPos != std::string::npos) {
+                if (openBracketPos != string::npos) {
                     // Find the closing bracket of the list
                     size_t closeBracketPos = line.find("]", openBracketPos);
-                    if (closeBracketPos != std::string::npos) {
+                    if (closeBracketPos != string::npos) {
                         // Extract the list contents
                         string listContents = line.substr(openBracketPos + 1, closeBracketPos - openBracketPos - 1);
 
@@ -265,7 +265,7 @@ int main(int argc, char **argv) {
                         vector<string> items;
                         size_t start = 0;
                         size_t commaPos;
-                        while ((commaPos = listContents.find(",", start)) != std::string::npos) {
+                        while ((commaPos = listContents.find(",", start)) != string::npos) {
                             items.push_back(listContents.substr(start, commaPos - start));
                             start = commaPos + 2;  // Skip the comma and the space
                         }
@@ -287,15 +287,15 @@ int main(int argc, char **argv) {
     zincFile.close();
 
     // Output the translated C++ code to a file
-    std::ofstream outputFile("zinc_to.cpp");
+    ofstream outputFile("zinc_to.cpp");
 
     if (!outputFile.is_open()) {
-        std::cerr << "Error: Unable to create output file." << std::endl;
+        cerr << "Error: Unable to create output file." << endl;
         return 1;
     }
 
-    for (const std::string& translatedLine : translatedCode) {
-        outputFile << translatedLine << std::endl;
+    for (const string& translatedLine : translatedCode) {
+        outputFile << translatedLine << endl;
     }
 
     compileCode();
