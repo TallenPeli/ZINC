@@ -1,8 +1,6 @@
 # ZINC
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[![GitHub](https://img.shields.io/github/license/Ananto30/cap-em)](/LICENSE.md)
 
 Zero-cost INtegrated C++
 --------------------------------------------------------
