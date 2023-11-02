@@ -1,6 +1,6 @@
 # ZINC
 
-[![GitHub](https://img.shields.io/github/license/Ananto30/cap-em)](/LICENSE.md)
+[![GitHub](https://img.shields.io/github/license/Ananto30/cap-em)](/LICENSE)
 
 Zero-cost INtegrated C++
 --------------------------------------------------------
