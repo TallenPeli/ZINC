@@ -30,7 +30,7 @@ int optimization = 0;
 /*======================*/
 
 // Add functions at the top of the translated C++ file
-string addCPPCode(){
+string addFunctions(){
     string code;
     code.append("#include <iostream>\n#include <string>\n#include <type_traits>");
     code.append("\n//Standard Zinc functions from zincstd\n");
@@ -43,6 +43,11 @@ string addCPPCode(){
     code.append("std::string getline(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}\n");
     
     return code;
+}
+
+string addColorLibrary(){
+    string code;
+    
 }
 
 void flagHandler(int FlagAmt, char **flag){
@@ -167,10 +172,17 @@ int main(int argc, char **argv) {
     string line;
 
     while (getline(zincFile, line)) {
+        
+        // Comment handler
+        size_t commentPos = line.find("//");
+        if (commentPos != string::npos) {
+            line = line.substr(0, commentPos);
+        }
+
         if(line == "using zincstd;" && !isZincFile){
             isZincFile = true;
             line.erase();
-            line.append(addCPPCode());
+            line.append(addFunctions());
         }else if (!isZincFile){
             cout << "Error : Not a valid ZINC file [2]" << endl;
             exit(2);
@@ -277,6 +289,12 @@ int main(int argc, char **argv) {
                     }
                 }
             }
+        }
+
+        // Translate wait()
+        size_t waitPos = line.find("wait(");
+        if (waitPos == 0 || (waitPos != string::npos && (line[waitPos - 1] == ' ' || line[waitPos - 1] == ';' || line[waitPos - 1] == '}'|| line[waitPos - 1] == '{'))) {
+            line.replace(waitPos, 0, "");
         }
 
         // Add the translated line to the vector
