@@ -1,5 +1,6 @@
 using zincstd;
 
+// This gets remove at runtime
 main(){
     string hello = "hello";
     list string name1["assds", "kjdkjfkj"];

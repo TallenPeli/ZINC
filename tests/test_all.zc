@@ -1,0 +1,38 @@
+using zincstd;
+
+main(){
+    println("Testing Loops...");
+    int counter = 0;
+    loop(10, i){
+        counter++;
+        println(counter);
+    }
+    println("Loops Succeeded!");
+
+    println("Testing Lists...");
+    list int test[1, 2, 3, 4, 5, 6];
+    loop(6, i){
+        println(test[i]);
+    }
+    println("Lists Passed!");
+
+    println("Testing rest...");
+
+    print("One...");
+    rest(1s);
+    print("Two...");
+    rest(1000ms);
+    println("Three...");
+    rest(1s);
+    
+    loop(10000, i){
+        loop((i/1), j){
+            print(" ");
+        }
+        print("Iteration : ");
+        println(i);
+        rest(1ms);
+    }
+
+    println("Rest Passed!");
+}

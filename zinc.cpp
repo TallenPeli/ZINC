@@ -18,7 +18,6 @@
 // OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -53,22 +52,20 @@ int optimization = 0;
 // Add functions at the top of the translated C++ file
 string addFunctions(){
     string code;
-    code.append("#include <iostream>\n#include <string>\n#include <type_traits>");
+    code.append("#include <iostream>\n#include <string>\n#include <type_traits>\n#include <thread>\n#include <chrono>");
     code.append("\n//Standard Zinc functions from zincstd\n");
-    code.append("template <typename T>\nvoid print(const T& input){std::cout << input;}\n");
-    code.append("void print(std::string input){std::cout << input;}\n");
-    code.append("template <typename T>\nvoid println(const T& input = T()) { if constexpr (!std::is_void_v<T>) std::cout << input << std::endl; }\n");
-    code.append("void println(){std::cout << std::endl;}\n");
+    code.append("using namespace std::chrono_literals;\n");
+    code.append("template <typename T>\nvoid print(const T& input){std::cout << input;std::cout.flush();}\n");
+    code.append("void print(std::string input){std::cout << input;std::cout.flush();}\n");
+    code.append("template <typename T>\nvoid println(const T& input = T()) { if constexpr (!std::is_void_v<T>) std::cout << input << std::endl;std::cout.flush();}\n");
+    code.append("void println(){std::cout << std::endl;std::cout.flush();}\n");
     code.append("void newline(){std::cout << std::endl;}\n");
     code.append("std::string input(std::string prompt){std::string Input;std::cout << prompt;std::cin >> Input;return Input;}\n");
     code.append("std::string getline(std::string prompt){std::string Input;std::cout << prompt;getline(std::cin, Input);return(Input);}\n");
-    
+    code.append("template <typename Rep, typename Period>\nvoid rest(const std::chrono::duration<Rep, Period>& duration){std::this_thread::sleep_for(duration);}");
+    code.append("");
+
     return code;
-}
-
-string addColorLibrary(){
-    string code;
-
 }
 
 void flagHandler(int FlagAmt, char **flag){
@@ -166,7 +163,7 @@ string join(const vector<string>& elements, const string& delimiter) {
 }
 
 int main(int argc, char **argv) {
-    // Define functions
+
     flagHandler(argc, argv);
 
     char cwd[1024];
@@ -193,13 +190,13 @@ int main(int argc, char **argv) {
     string line;
 
     while (getline(zincFile, line)) {
-        
         // Comment handler
         size_t commentPos = line.find("//");
         if (commentPos != string::npos) {
             line = line.substr(0, commentPos);
         }
 
+        // Check if the input file is a valid zinc file
         if(line == "using zincstd;" && !isZincFile){
             isZincFile = true;
             line.erase();
@@ -214,6 +211,7 @@ int main(int argc, char **argv) {
         if (fnPos == 0 || (fnPos != string::npos && (line[fnPos - 1] == ' ' || line[fnPos - 1] == ';' || line[fnPos - 1] == '}'|| line[fnPos - 1] == '{'))) {
             line.replace(fnPos, 2, "void ");
         }
+
 
         size_t letPos = line.find("let ");
         if(letPos == 0 || (letPos != string::npos && (line[letPos - 1] == ' ' || line[letPos - 1] == ';' || line[letPos - 1] == '}' || line[letPos - 1] == '{'))){
@@ -315,7 +313,7 @@ int main(int argc, char **argv) {
         // Translate wait()
         size_t waitPos = line.find("wait(");
         if (waitPos == 0 || (waitPos != string::npos && (line[waitPos - 1] == ' ' || line[waitPos - 1] == ';' || line[waitPos - 1] == '}'|| line[waitPos - 1] == '{'))) {
-            line.replace(waitPos, 0, "");
+            
         }
 
         // Add the translated line to the vector
