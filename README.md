@@ -18,7 +18,7 @@ C or C++ libraries are compatable with ZINC, however can only be programmed usin
 
 Insall dependnecies
 ```shell
-sudo dnf install g++ ncurses-devel
+sudo dnf install make g++
 ```
 
 clone repository
@@ -33,14 +33,14 @@ cd ./ZINC
 
 Build
 ```shell
-g++ zinc.cpp -o zinc -lncurses
+make
 ```
 
 ### ubuntu/debian
 
 Install dependnecies
 ```shell
-sudo apt install g++
+sudo apt-get install make g++
 ```
 clone repository
 ```shell
@@ -53,14 +53,14 @@ cd ./ZINC
 
 Build
 ```shell
-g++ zinc.cpp -o zinc
+make
 ```
 
 ### Arch/Manjaro
 
 Insall dependnecies
 ```shell
-sudo pacman -Syu g++
+sudo pacman -S make g++
 ```
 clone repository
 ```shell
@@ -73,7 +73,7 @@ cd ./ZINC
 
 Build
 ```shell
-g++ zinc.cpp -o zinc
+make
 ```
 
 ### Windows
