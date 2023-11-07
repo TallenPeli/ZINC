@@ -5,16 +5,19 @@
 Zero-cost INtegrated C++
 --------------------------------------------------------
 
-ZINC is a programming language written in C++ and C and aims to provide the same (if not more) functionality of these languages, but is easier to understand and a lot quicker to develop.
+ZINC is a programming language written in C++ that aims to provide the same (if not more) functionality, but is easier to learn and has a faster development cycle.
 
-ZINC is for Linux/UNIX systems, but a windows port is planned. ZINC uses the ncurses library, and makes it a lot easier to use. 
+ZINC is for Linux/UNIX systems. (Windows port is planned)
 
-C or C++ libraries are compatable with ZINC, however can only be programmed using their native syntax.
+C++ libraries are compatable with ZINC.
 
 --------------------------------------------------------
+
+# Install
+
 ## Compile from source
 
-### Fedora/redhat
+### Fedora/RHEL
 
 Insall dependnecies
 ```shell
@@ -36,7 +39,7 @@ Build
 make
 ```
 
-### ubuntu/debian
+### Ubuntu/Debian
 
 Install dependnecies
 ```shell
@@ -119,10 +122,15 @@ Certainly! Here's the documentation for the `-k`, `-v`, and optimization flags a
 using zincstd;
 
 main(){
+    let zinc_version = 0.0.2;
     string name = input("Enter name : ");
-    loop(100, i){
+    loop(2, i){
         print("HI ");
         println(name);
     }
+    rest(1s);
+    print("Zinc Version : ");
+    println(zinc_version);
+    return 0;
 }
 ```
