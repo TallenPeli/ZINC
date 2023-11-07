@@ -1,6 +1,7 @@
 using zincstd;
 
 main(){
+    print("Hello", "Hello");
     println("Testing Loops...");
     int counter = 0;
     loop(10, i){
@@ -25,13 +26,23 @@ main(){
     println("Three...");
     rest(1s);
     
-    loop(10000, i){
-        loop((i/1), j){
-            print(" ");
+    loop(10, a){
+        loop(10, i){
+            loop((i), j){
+                print("penis");
+            }
+            print("Iteration : ");
+            println(i);
+            rest(10ms);
         }
-        print("Iteration : ");
-        println(i);
-        rest(1ms);
+        loop(10, i){
+            loop(abs(i-10), k){
+                print(" ");
+            }
+            print("Iteration : ");
+            println(i);
+            rest(10ms);
+        }
     }
 
     println("Rest Passed!");

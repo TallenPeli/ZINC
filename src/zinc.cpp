@@ -25,16 +25,14 @@
 #include <vector>
 #include <cstdlib>
 #include <functional>
+#include "tokenizer.h"
+#include "flag_handler.h"
 
 using namespace std;
 
-bool keepTranslation = false;
-bool verboseOutput = false;
-bool isZincFile = false;
-bool compileToAsssembly =  false;
+// Variable declaration
 
-string optimizationList[6] = {"-O0", "-O1", "-O2", "-O3", "-Os", "-Ofast"};
-int optimization = 0;
+bool isZincFile = false;
 
 // Colour definitions
 
@@ -66,43 +64,6 @@ string addFunctions(){
     code.append("");
 
     return code;
-}
-
-void flagHandler(int FlagAmt, char **flag){
-    string file = flag[1];
-    if (file.substr(0, 2) == "./") {
-        file = file.substr(2);
-    }
-
-    for (int i = 2; i < FlagAmt; i++) {
-        string arg = flag[i];
-        if (arg == "-k" || arg == "--keep-translation") {
-            keepTranslation = true;
-        }else if(arg == "-v" || arg == "--verbose") {
-            verboseOutput = true;
-        }else if(arg == "-O0"){
-            optimization = 0;
-        }else if(arg == "-O1"){
-            optimization = 1;
-        }else if(arg == "-O2"){
-            optimization = 2;
-        }else if(arg == "-O3"){
-            optimization = 3;
-        }else if(arg == "-Os"){
-            optimization = 4;
-        }else if(arg == "-Ofast"){
-            optimization = 5;
-        }else if(arg == "-asm" || arg == "--assembly"){
-            compileToAsssembly = true;
-        }
-    }
-
-    if(verboseOutput){
-        cout << "| Verbose output: [" << GREEN << "True" << RESET << "]" << endl;
-        cout << "| Assembly Output: [" << (compileToAsssembly ? GREEN : RED) << (compileToAsssembly ? "True" : "False") << RESET << "]" << endl;
-        cout << "| Keep translation: [" << (keepTranslation ? GREEN : RED) << (keepTranslation ? "True" : "False") << RESET << "]" << endl;
-        cout << "| Optimization : [" << MAGENTA << optimizationList[optimization] << RESET << "]" << endl;
-    }
 }
 
 void runCode(){
@@ -162,6 +123,17 @@ string join(const vector<string>& elements, const string& delimiter) {
     return result;
 }
 
+
+// Tokenizer returns a list of strings
+string tokenize(string input){
+    string tokens;
+    size_t commaPos = input.find(",");
+    if (commaPos != string::npos){
+        string tokens = input.substr(0, commaPos);
+    }
+    return tokens;
+}
+
 int main(int argc, char **argv) {
 
     flagHandler(argc, argv);
@@ -194,6 +166,15 @@ int main(int argc, char **argv) {
         size_t commentPos = line.find("//");
         if (commentPos != string::npos) {
             line = line.substr(0, commentPos);
+        }
+
+        size_t printPos = line.find("print(");
+        if (printPos != string::npos){
+            size_t close_bracket = line.find("\\)\\", printPos);
+            if (close_bracket != string::npos) {
+                string to_tokenize = line.substr(printPos + 6, close_bracket - printPos + 6);
+                cout << tokenize(to_tokenize) << endl;
+            }
         }
 
         // Check if the input file is a valid zinc file

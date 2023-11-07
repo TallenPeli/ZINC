@@ -1,4 +1,7 @@
 # ZINC
+
+[![GitHub](https://img.shields.io/github/license/Ananto30/cap-em)](/LICENSE)
+
 Zero-cost INtegrated C++
 --------------------------------------------------------
 
@@ -35,9 +38,9 @@ g++ zinc.cpp -o zinc -lncurses
 
 ### ubuntu/debian
 
-Insall dependnecies
+Install dependnecies
 ```shell
-sudo apt install g++ libncurses5-dev
+sudo apt install g++
 ```
 clone repository
 ```shell
@@ -50,14 +53,14 @@ cd ./ZINC
 
 Build
 ```shell
-g++ zinc.cpp -o zinc -lncurses
+g++ zinc.cpp -o zinc
 ```
 
 ### Arch/Manjaro
 
 Insall dependnecies
 ```shell
-sudo pacman -Syu g++ lib32-ncurses
+sudo pacman -Syu g++
 ```
 clone repository
 ```shell
@@ -70,7 +73,7 @@ cd ./ZINC
 
 Build
 ```shell
-g++ zinc.cpp -o zinc -lncurses
+g++ zinc.cpp -o zinc
 ```
 
 ### Windows
@@ -78,6 +81,8 @@ g++ zinc.cpp -o zinc -lncurses
 
 
 ## Usage
+[Documentation](/docs/index.md)
+
 (The default ZINC file format is .zc but is not required.)
 
 ```shell
