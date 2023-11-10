@@ -1,0 +1,12 @@
+"filename", "language", "JSON with Comments", "Makefile", "zinc", "Markdown", "comment", "blank", "total"
+"/home/tallen/ZINC/Makefile", "Makefile", 0, 18, 0, 0, 10, 11, 39
+"/home/tallen/ZINC/README.md", "Markdown", 0, 0, 0, 103, 0, 33, 136
+"/home/tallen/ZINC/ZINC.code-workspace", "JSON with Comments", 7, 0, 0, 0, 0, 0, 7
+"/home/tallen/ZINC/docs/index.md", "Markdown", 0, 0, 0, 120, 0, 39, 159
+"/home/tallen/ZINC/examples/hello_world.zc", "zinc", 0, 0, 4, 0, 0, 1, 5
+"/home/tallen/ZINC/examples/lists.zc", "zinc", 0, 0, 12, 0, 1, 1, 14
+"/home/tallen/ZINC/examples/nested_loops.zc", "zinc", 0, 0, 12, 0, 0, 2, 14
+"/home/tallen/ZINC/examples/nested_loops_2.zc", "zinc", 0, 0, 21, 0, 0, 5, 26
+"/home/tallen/ZINC/examples/test.zc", "zinc", 0, 0, 2, 0, 0, 0, 2
+"/home/tallen/ZINC/tests/test_all.zc", "zinc", 0, 0, 43, 0, 0, 6, 49
+"Total", "-", 7, 18, 94, 223, 11, 98, 451

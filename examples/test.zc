@@ -1,0 +1,4 @@
+main(){
+    print("hello", (1+2), "Hel,lo"); // Comments
+    println("Hello", "hell,o");
+}

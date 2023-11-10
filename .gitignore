@@ -13,13 +13,19 @@
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
+# Folder with Compiled binaries that are used for tesing the build
+.bin-*
+.obj-*
+
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+.o*
 
-# Additional exclusions
+# ZINC exclusions
 zinc_output
 zinc_to.cpp
 zinc_to.asm
+zinc_testing.cpp
 zinc
 
 # End of https://www.toptal.com/developers/gitignore/api/linux
