@@ -7,7 +7,7 @@ Zero-cost INtegrated C++
 
 ZINC is a programming language written in C++ that aims to provide the same (if not more) functionality, but is easier to learn and has a faster development cycle.
 
-ZINC is for Linux/UNIX systems. (Windows port is planned)
+ZINC is for Linux/UNIX systems. (Windows port is planned, although it works well in WSL)
 
 C++ libraries are compatable with ZINC.
 
