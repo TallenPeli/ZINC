@@ -1,4 +1,17 @@
+using namespace std;
+
+fn run(){
+    print("hello");
+}
+
 main(){
     print("hello", (1+2), "Hel,lo"); // Comments
     println("Hello", "hell,o");
+    loop(100, i){
+        loop(i, j){
+            print(" ");
+        }
+        println("Hello");
+        rest(0.1s);
+    }
 }

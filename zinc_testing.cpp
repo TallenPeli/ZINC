@@ -52,5 +52,6 @@ int main(){
     console.writeLine("Hello, world!");
     console.writeLine("This is a test");
     console.runCommand(console.getLine());
+    console.clear();
     return 69;
 }

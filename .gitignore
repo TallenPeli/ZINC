@@ -14,18 +14,22 @@
 .Trash-*
 
 # Folder with Compiled binaries that are used for tesing the build
-.bin-*
-.obj-*
+/bin/
+/obj/
+/.VSCodeCounter/
+/.vscode/
+
+# Ignore .o object files
+*.o
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
-.o*
 
 # ZINC exclusions
+zinc_testing.cpp
 zinc_output
 zinc_to.cpp
 zinc_to.asm
-zinc_testing.cpp
 zinc
 
 # End of https://www.toptal.com/developers/gitignore/api/linux

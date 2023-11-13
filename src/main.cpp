@@ -131,6 +131,7 @@ int main(int argc, char **argv) {
         int find_print = line.find("print(");
         int find_println = line.find("println(");
         int find_loop = line.find("loop(");
+        int find_fn = line.find("fn ");
 
         if ((main_pos == 0 || (main_pos != string::npos && (line[main_pos - 1] == ' ' || line[main_pos - 1] == ';' || line[main_pos - 1] == '}' || line[main_pos - 1] == '{')))) {
             string new_line = translate_main(line);
@@ -145,7 +146,10 @@ int main(int argc, char **argv) {
             translatedCode.push_back(new_line);
 
         } else if ((find_loop == 0 || (find_loop != string::npos && (line[find_loop - 1] == ' ' || line[find_loop - 1] == ';' || line[find_loop - 1] == '}' || line[find_loop - 1] == '{')))) {
-            string new_line = translate_print(tokenize_loop(line));
+            string new_line = translate_loop(tokenize_loop(line));
+            translatedCode.push_back(new_line);
+        } else if ((find_fn == 0 || (find_fn != string::npos && (line[find_fn - 1] == ' ' || line[find_fn - 1] == ';' || line[find_fn - 1] == '}' || line[find_fn - 1] == '{')))) {
+            string new_line = translate_fn(line);
             translatedCode.push_back(new_line);
         } else {
             // None of the conditions matched, so just add the line to the translated code

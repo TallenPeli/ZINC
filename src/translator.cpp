@@ -49,12 +49,39 @@ string translate_print(vector<string> tokens){
 }
 
 string translate_main(string line){
-    int mainPos = line.find("main()");
+    int mainPos = line.find("main(");
 
     if (mainPos == 0 || (mainPos != string::npos && (line[mainPos - 1] == ' ' || line[mainPos - 1] == ';' || line[mainPos - 1] == '}'|| line[mainPos - 1] == '{'))) {
         line.replace(mainPos, 0, "int ");
     }
 
+    return line;
+}
+
+string translate_fn(string line){
+    int fnPos = line.find("fn ");
+
+    if (fnPos == 0 || (fnPos != string::npos && (line[fnPos - 1] == ' ' || line[fnPos - 1] == ';' || line[fnPos - 1] == '}'|| line[fnPos - 1] == '{'))) {
+        line.replace(fnPos, 3, "void ");
+    }
+
+    return line;
+}
+
+string translate_loop(vector<string> tokens){
+    string line;
+    if (tokens.size() > 0) {
+        int spacesCount = std::stoi(tokens[0]);
+
+        // Append the specified number of spaces to the output string
+        for (int i = 0; i < spacesCount; i++) {
+            line.append(" ");
+        }
+    }
+
+    cout << tokens[0] << tokens[1] << tokens[2] << endl;
+    string loop = "for(int " + tokens[2] + " = 0; " + tokens[2] + " < " + tokens[1] + "; " + tokens[2] + "++){";
+    line.append(loop);
     return line;
 }
 
@@ -75,13 +102,6 @@ void translate(string line){
             cout << "Error : Not a valid ZINC file [2]" << endl;
             exit(2);
         }
-
-        // Translate 'fn ' to 'int ' for function declarations
-        int fnPos = line.find("fn");
-        if (fnPos == 0 || (fnPos != string::npos && (line[fnPos - 1] == ' ' || line[fnPos - 1] == ';' || line[fnPos - 1] == '}'|| line[fnPos - 1] == '{'))) {
-            line.replace(fnPos, 2, "void ");
-        }
-
 
         int letPos = line.find("let ");
         if(letPos == 0 || (letPos != string::npos && (line[letPos - 1] == ' ' || line[letPos - 1] == ';' || line[letPos - 1] == '}' || line[letPos - 1] == '{'))){
@@ -104,12 +124,6 @@ void translate(string line){
             }else{
                 line.replace(letPos, 4, "auto ");
             }
-        }
-
-        // Translate main
-        int mainPos = line.find("main()");
-        if (mainPos == 0 || (mainPos != string::npos && (line[mainPos - 1] == ' ' || line[mainPos - 1] == ';' || line[mainPos - 1] == '}'|| line[mainPos - 1] == '{'))) {
-            line.replace(mainPos, 0, "int ");
         }
 
         int stringPos = line.find("string");

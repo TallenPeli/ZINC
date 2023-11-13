@@ -143,15 +143,8 @@ vector<string> tokenize_loop(string line) {
         line = line.substr(print_pos + 5); // Move forward by the length of "loop("
     }
 
-    // Logic to check if the string is in quotes. If true, ignore any commas in the line
-    bool is_in_quotes = false;
-
     for (int i = 0; i < line.length(); i++) {
-        if (line[i] == '"') {
-            is_in_quotes = !is_in_quotes;
-        }
-
-        if (line[i] == ',' && !is_in_quotes) {
+        if (line[i] == ',') {
             tokens.push_back(line.substr(0, i));
             line.erase(0, i + 1); // Move forward by the length of the token and the comma
             i = -1;  // Reset the loop counter to 0 to analyze the modified line again
@@ -171,7 +164,10 @@ vector<string> tokenize_loop(string line) {
         }
     }
 
-    tokens.push_back("\"\\n\"");
+    int var_pos = tokens[2].find_first_not_of(" "); // Find the position of the first non-space character
+    if (var_pos != string::npos) {
+        tokens[2] = tokens[2].substr(var_pos); // Extract from the first non-space character till the end
+    }
 
     return tokens;
 }

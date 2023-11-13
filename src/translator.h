@@ -12,5 +12,7 @@ extern bool isZincFile;
 string translate_print(vector<string> tokens);
 string translate_println(vector<string> tokens);
 string translate_main(string line);
+string translate_fn(string line);
+string translate_loop(vector<string> tokens);
 
 #endif // TRANSLATOR_H_INCLUDED
