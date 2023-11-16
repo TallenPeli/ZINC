@@ -21,7 +21,7 @@ C++ libraries are compatable with ZINC.
 
 Insall dependnecies
 ```shell
-sudo dnf install make g++
+sudo dnf install make g++ gcc
 ```
 
 clone repository
@@ -43,7 +43,7 @@ make
 
 Install dependnecies
 ```shell
-sudo apt-get install make g++
+sudo apt-get install make g++ gcc
 ```
 clone repository
 ```shell
@@ -63,7 +63,7 @@ make
 
 Insall dependnecies
 ```shell
-sudo pacman -S make g++
+sudo pacman -S make gcc
 ```
 clone repository
 ```shell
