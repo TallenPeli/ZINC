@@ -92,8 +92,6 @@ make
 [zinc executable] {zinc script} [flags]
 ```
 
-Certainly! Here's the documentation for the `-k`, `-v`, and optimization flags as per your outline:
-
 ### Flags
 
 ```
