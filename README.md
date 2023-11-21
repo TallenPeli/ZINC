@@ -132,3 +132,7 @@ main(){
     return 0;
 }
 ```
+
+### VSCode Language support
+To properly use ZINC in the VSCode IDE, make sure to install the language support extension from this github repository (a (guide)[https://stackoverflow.com/a/75326740] to manually install vscode extensions):
+(https://github.com/Talleeenos69/ZINC-VSCode-Language_Support)[https://github.com/Talleeenos69/ZINC-VSCode-Language_Support]
