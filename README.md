@@ -133,7 +133,7 @@ main(){
 }
 ```
 
-### VSCode Language Support
+# VSCode Language Support
 
 To properly use ZINC in the VSCode IDE, ensure you have installed the language support extension from this GitHub repository :
 
