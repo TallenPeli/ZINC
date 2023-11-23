@@ -46,7 +46,6 @@ class _console{
 };
 
 int main(){
-    // this is a test comment hehehe
     _console console;
     console.out(console.getLine());
     console.clear();
